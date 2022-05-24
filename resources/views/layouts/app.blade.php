@@ -42,7 +42,7 @@
                         @else
                             <!-- sección de usuarios con inicio se sesión -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Post</a>
+                                <a class="nav-link" href="{{ url('/posts') }}">Post</a>
                             </li>
                         @endguest
                         
