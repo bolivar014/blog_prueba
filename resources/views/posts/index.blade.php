@@ -45,7 +45,7 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form data-action="{{ url('posts.store') }}" method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
+                    <form data-action="{{ route('posts.storePost') }}" method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Agregar Post</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -79,40 +79,4 @@
                 </div>
             </div>
         </div>
-    @endsection
-
-    @section('morejs')
-        <script type="text/javascript">
-            // $(document).on('submit', '#formCrearPost', function(e) {
-            $('#formCrearPost').on('submit', function(e){
-                e.preventDefault();
-                
-                var URL = $('#formCrearPost').attr('data-action');
-                // console.log('{{ csrf_token() }}');
-                $.ajax({
-                    url: URL,
-                    method: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        txt_titulo_post: $('#txt_titulo_post').val(),
-                        txt_email_post: $('#txt_email_post').val(),
-                        txt_contenido_post: $('#txt_contenido_post').val(),
-                    },
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(response) {
-                        console.log('success');
-                        console.log(response);
-                    },
-                    error: function(err) {
-                        console.log('error');
-                        console.log(err);
-                    }
-                });  
-                 
-            });
-        </script>
     @endsection

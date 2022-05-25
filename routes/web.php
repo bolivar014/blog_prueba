@@ -22,4 +22,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Accedo al recurso compartido de los posts
-Route::resource('posts', PostController::class);
+Route::resource('/posts', PostController::class);
+
+Route::post('/posts', [App\Http\Controllers\PostController::class, 'storePost'])->name('posts.storePost');
