@@ -44,7 +44,7 @@
                                         {{ $post->titulo }}
                                     </div>
                                     <div class="col-md-6 mr-auto" style="text-align: right;" >
-                                        Fecha: {{ $post->created_at }}
+                                        Fecha: {{ substr($post->created_at, 0, 10) }}
                                     </div>
                                 </div>
                             </div>                        
