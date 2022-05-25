@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
     /**
@@ -14,9 +15,12 @@ class PostController extends Controller
      */
     public function index()
     {
+        // Ejecutamos query para recuperar los ultimos 10 posts ordenandolos descendente
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        
         // Retornamos la vista de los posts 
         return view('posts.index', [
-            'posts' => Post::paginate(10)
+            'posts' => $posts
         ]);
     }
 
