@@ -26,6 +26,9 @@ $('#formCrearPost').on('submit', function(e){
                 showConfirmButton: false,
                 timer: 1500
             })
+            
+            // Limpiamos alertas de error existentes
+            $('#txt_alert').remove();
 
             // Reseteamos formulario
             $('#formCrearPost').trigger("reset");
@@ -43,15 +46,17 @@ $('#formCrearPost').on('submit', function(e){
         // console.log(resp);
         Swal.fire({
             icon: 'error',
-            title: 'Se ha generado un error al intentar almacenar el post, por favor intentar más tarde...',
+            title: 'Por favor completar los datos del formulario...',
             showConfirmButton: false,
             timer: 1500
         })
 
+        // Limpiamos alertas de error existentes
+        $('#txt_alert').remove();
+
         // Iteramos los campos que aún no han sido completados para alerta de error
         $.each(resp.responseJSON.errors, function (key, value) {
-            $(document).find('[name='+key+']').after('<span class="text-strong text-danger"><strong>' +value+ '</strong></span>')
-
+            $(document).find('[name='+key+']').after('<span id="txt_alert" name="txt_alert" class="text-strong text-danger"><strong>' +value+ '</strong></span>')
         });
 
     });  
