@@ -81,3 +81,21 @@ function limpiarCampos() {
     $('#txt_email_post').val('');
     $('#txt_contenido_post').val('');
 }
+
+// Evento para eliminar registro
+function confirmarEliminarPost() {
+    Swal.fire({
+        title: 'Deseas eliminar el registro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: `Cancelar`,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire('Saved!', '', 'success')
+        }
+      })
+}

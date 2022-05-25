@@ -102,5 +102,7 @@
     <script src="{{ asset('js/ajax-post.js') }}"></script>
     <!-- CDN - SWEET ALERT -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- CDN - FONTAWESOME -->
+    <script src="https://kit.fontawesome.com/9ad82b5fbd.js" crossorigin="anonymous"></script>
 </body>
 </html>

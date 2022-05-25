@@ -13,8 +13,13 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // Ejecutamos query para recuperar los ultimos 10 posts ordenandolos descendente
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
         //
-        return view('admins.index');
+        return view('admins.index', [
+            'posts' => $posts
+        ]);
     }
 
     /**
