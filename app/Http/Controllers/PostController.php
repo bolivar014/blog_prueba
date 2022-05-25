@@ -92,9 +92,31 @@ class PostController extends Controller
         //
     }
 
+    // Recurso para almacenar nuevos post
     public function storePost(Request $request) {
-        dd($request);
-        //
-        // echo "resp ajax controller";
+        // dd($request);
+        
+        // Validamos los request recibidos desde el formulario
+        $validarDatos = $request->validate([
+            'txt_titulo_post' => 'required|min:3|max:50',
+            'txt_email_post' => 'required|email',
+            'txt_contenido_post' => 'required|min:5|max:250'
+        ]);
+
+        // Creamos nueva instancia al modelo POST
+        $post = new Post();
+
+        // Configuramos datos a almacenar en DB
+        $post->fk_id_user = auth()->id();
+        $post->titulo = $validarDatos['txt_titulo_post'];
+        $post->email = $validarDatos['txt_email_post'];
+        $post->imagen = 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+        $post->contenido = $validarDatos['txt_contenido_post'];
+
+        // Guardamos cambios
+        $post->save();
+
+        // return redirect('/posts');
+        return response(json_encode(array('respuesta' => 'OK')),200);
     }
 }

@@ -1,9 +1,8 @@
-// $(document).on('submit', '#formCrearPost', function(e) {
+// EVento submit para la creación de nuevo post
 $('#formCrearPost').on('submit', function(e){
     e.preventDefault();
     
-    console.log( $( this ).serializeArray() );
-    
+    // Ejecutamos ajax
     $.ajax({
         url: '/posts/storePost',
         method: 'POST',
@@ -17,11 +16,36 @@ $('#formCrearPost').on('submit', function(e){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
     }).done(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
+        if(response.respuesta == 'OK') {
+            // Sweet alert en caso que se cree el post exitosamente
+            Swal.fire({
+                icon: 'success',
+                title: 'Post creado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+            // Reseteamos formulario
+            $('#formCrearPost').trigger("reset");
+        } else {
+            // Sweet alert en caso que no se cree el post exitosamente
+            Swal.fire({
+                icon: 'error',
+                title: 'El post no se ha creado correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     }).fail(function(resp) {
-        console.log('error');
-        console.log(resp);
+        // console.log('error');
+        // console.log(resp);
+        Swal.fire({
+            icon: 'error',
+            title: 'Se ha generado un error al intentar almacenar el post, por favor intentar más tarde...',
+            showConfirmButton: false,
+            timer: 1500
+        })
     });  
-     
 });
