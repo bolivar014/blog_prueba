@@ -39,6 +39,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        echo "resp ajax controller";
     }
 
     /**

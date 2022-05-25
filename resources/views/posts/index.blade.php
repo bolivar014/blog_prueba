@@ -45,35 +45,75 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form action="#" method="POST">
+                    <form action="#" method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Agregar Post</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            {{ csrf_field() }}
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Titulo:</label>
-                                <input type="text" class="form-control" id="txt_post" name="txt_post" placeholder="Titulo del post">
+                                <input type="text" class="form-control" id="txt_titulo_post" name="txt_titulo_post" placeholder="Titulo del post" required>
                             </div>
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Email:</label>
-                                <input type="text" class="form-control" id="txt_email" name="txt_email" placeholder="name@example.com">
+                                <input type="text" class="form-control" id="txt_email_post" name="txt_email_post" placeholder="name@example.com" required>
                             </div>
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Imagen:</label>
-                                <input type="file" class="form-control" id="txt_imagen" name="txt_imagen">
+                                <input type="file" class="form-control" id="txt_imagen_post" name="txt_imagen_post">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Contenido:</label>
-                                <textarea class="form-control" id="txt_contenido" rows="3" placeholder="Descripción..."></textarea>
+                                <textarea class="form-control" id="txt_contenido_post" name="txt_contenido_post" rows="3" placeholder="Descripción..."></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary" id="btn_crear_post" name="btn_crear_post">Guardar</button>
                         </div>         
                     </form>
                 </div>
             </div>
         </div>
+    @endsection
+
+    @section('morejs')
+        <script type="text/javascript">
+            $.ajaxSetup(
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            );
+
+                
+            $('#btn_crear_post').on('click', function(e) {
+                // alert('recibio click en el botón: btn_crear_post');
+                // e.preventDefault();
+
+                // 
+                // let route = "{{ route('/posts') }}";
+                
+                // Ejecutamos ajax
+                $.ajax({
+                    url: "/posts",
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')     
+                    },
+                    dataType: 'json',
+                    data: $('#formCrearPost').serializeArray(),
+                    success: function(respuesta) {
+                        console.log('success');
+                        console.log(respuesta);
+                    },
+                    error: function(err) {
+                        console.log('error');
+                        console.log(err);
+                    }
+                });    
+            });
+        
+        </script>
     @endsection
