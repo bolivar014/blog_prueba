@@ -100,7 +100,7 @@ class PostController extends Controller
         $validarDatos = $request->validate([
             'txt_titulo_post' => 'required|min:3|max:50',
             'txt_email_post' => 'required|email',
-            'txt_contenido_post' => 'required|min:5|max:250'
+            'txt_contenido_post' => 'required|min:5|max:50'
         ]);
 
         // Creamos nueva instancia al modelo POST
@@ -116,7 +116,10 @@ class PostController extends Controller
         // Guardamos cambios
         $post->save();
 
-        // return redirect('/posts');
-        return response(json_encode(array('respuesta' => 'OK')),200);
+        if($post) {
+            return response(json_encode(array('respuesta' => 'OK')),200);
+        }
+
+        return redirect('/posts');
     }
 }

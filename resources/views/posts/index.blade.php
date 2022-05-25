@@ -8,6 +8,17 @@
                     </button>
                 </div>
 
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <h1 class="m-0">Completar los siguientes campos del formulario:</h1>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="col-md-12">
                     <br>
                     <h1 class="h2">Lista de POST</h1>
@@ -54,11 +65,12 @@
                             {{ csrf_field() }}
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Titulo:</label>
-                                <input type="text" class="form-control" id="txt_titulo_post" name="txt_titulo_post" placeholder="Titulo del post" required>
+                                <input type="text" class="form-control" id="txt_titulo_post" name="txt_titulo_post" placeholder="Titulo del post" value="{{ old('txt_titulo_post') }}">
+                                
                             </div>
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Email:</label>
-                                <input type="text" class="form-control" id="txt_email_post" name="txt_email_post" placeholder="name@example.com" required>
+                                <input type="text" class="form-control" id="txt_email_post" name="txt_email_post" placeholder="name@example.com" value="{{ old('txt_email_post') }}">
                             </div>
                             <!--
                             <div class="mb-3 col-md-7">
@@ -68,7 +80,7 @@
                             -->
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Contenido:</label>
-                                <textarea class="form-control" id="txt_contenido_post" name="txt_contenido_post" rows="3" placeholder="Descripción..."></textarea>
+                                <textarea class="form-control" id="txt_contenido_post" name="txt_contenido_post" rows="3" placeholder="Descripción..." value="{{ old('txt_contenido_post') }}"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">

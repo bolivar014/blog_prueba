@@ -47,5 +47,12 @@ $('#formCrearPost').on('submit', function(e){
             showConfirmButton: false,
             timer: 1500
         })
+
+        // Iteramos los campos que aún no han sido completados para alerta de error
+        $.each(resp.responseJSON.errors, function (key, value) {
+            $(document).find('[name='+key+']').after('<span class="text-strong text-danger"><strong>' +value+ '</strong></span>')
+
+        });
+
     });  
 });
