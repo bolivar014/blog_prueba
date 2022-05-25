@@ -2,22 +2,30 @@
 $('#formCrearPost').on('submit', function(e){
     e.preventDefault();
     
+    let formData = new FormData(this)
+    
+    formData.append('txt_id_r_post', $('#txt_id_r_post').val());
+    formData.append('txt_titulo_post', $('#txt_titulo_post').val());
+    formData.append('txt_email_post', $('#txt_email_post').val());
+    formData.append('txt_imagen_post', $('#txt_imagen_post')[0].files[0]);
+    formData.append('txt_contenido_post', $('#txt_contenido_post').val());
+
     // Ejecutamos ajax
     $.ajax({
         url: '/posts/storePost',
         method: 'POST',
         type: 'POST',
         dataType: 'JSON',
-        // contentType: false,
-        // cache: false,
-        // processData: false,
-        data: $(this).serializeArray(),
+        contentType: false,
+        processData: false,
+        data: formData,
+        enctype: 'multipart/form-data',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         },
     }).done(function(response) {
-        // console.log('success');
-        // console.log(response);
+        console.log('success');
+        console.log(response);
         if(response.respuesta == 'OK') {
             // Sweet alert en caso que se cree el post exitosamente
             Swal.fire({
@@ -47,8 +55,8 @@ $('#formCrearPost').on('submit', function(e){
             })
         }
     }).fail(function(resp) {
-        // console.log('error');
-        // console.log(resp);
+        console.log('error');
+        console.log(resp);
         Swal.fire({
             icon: 'error',
             title: 'Por favor completar los datos del formulario...',

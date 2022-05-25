@@ -94,7 +94,17 @@ class PostController extends Controller
 
     // Recurso para almacenar nuevos post
     public function storePost(Request $request) {
-        // dd($request);
+        // Verificamos que llegue la imagen al servidor
+        if($request->hasFile('txt_imagen_post')){
+            // Recuperamos  binario de la imagen
+            $file = $request->file('txt_imagen_post');
+            // Ruta donde se almacenara dicha imagen
+            $destinationPath = 'images/featureds/';
+            // Nombre de la imagen = Fecha - Nombre original
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            // Movemos archivo a ruta
+            $uploadSuccess = $request->file('txt_imagen_post')->move($destinationPath, $fileName);
+        }
         
         // Validamos los request recibidos desde el formulario
         $validarDatos = $request->validate([
@@ -103,7 +113,7 @@ class PostController extends Controller
             'txt_contenido_post' => 'required|min:5|max:50',
             'txt_id_r_post' => 'required'
         ]);
-
+        
         // Creamos nueva instancia al modelo POST
         $post = new Post();
 
@@ -111,16 +121,15 @@ class PostController extends Controller
         $post->fk_id_user = $validarDatos['txt_id_r_post'];
         $post->titulo = $validarDatos['txt_titulo_post'];
         $post->email = $validarDatos['txt_email_post'];
-        $post->imagen = 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+        $post->imagen = $destinationPath . $fileName;
         $post->contenido = $validarDatos['txt_contenido_post'];
 
         // Guardamos cambios
         $post->save();
 
+        // Verificamos que se hubiese realizado almacenamiento de post exitoso
         if($post) {
             return response(json_encode(array('respuesta' => 'OK')),200);
         }
-
-        return redirect('/posts');
     }
 }

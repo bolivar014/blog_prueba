@@ -76,12 +76,10 @@
                                 <label for="exampleFormControlInput1" class="form-label">Email:</label>
                                 <input type="text" class="form-control" id="txt_email_post" name="txt_email_post" placeholder="name@example.com" value="{{ old('txt_email_post') }}">
                             </div>
-                            <!--
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Imagen:</label>
-                                <input type="file" class="form-control" id="txt_imagen_post" name="txt_imagen_post">
+                                <input type="file" class="form-control" id="txt_imagen_post" name="txt_imagen_post[]" accept=".gif,.jpg,.jpeg,.png,.svg">
                             </div>
-                            -->
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Contenido:</label>
                                 <textarea class="form-control" id="txt_contenido_post" name="txt_contenido_post" rows="3" placeholder="Descripción..." value="{{ old('txt_contenido_post') }}"></textarea>
