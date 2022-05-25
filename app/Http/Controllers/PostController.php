@@ -95,6 +95,6 @@ class PostController extends Controller
     public function storePost(Request $request) {
         dd($request);
         //
-        echo "resp ajax controller";
+        // echo "resp ajax controller";
     }
 }
