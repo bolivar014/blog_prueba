@@ -45,7 +45,7 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
+                    <form data-action="{{ url('posts.store') }}" method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Agregar Post</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -83,25 +83,29 @@
 
     @section('morejs')
         <script type="text/javascript">
-            
-            $(document).on('click', '#btn_crear_post', function(e) {
+            // $(document).on('submit', '#formCrearPost', function(e) {
+            $('#formCrearPost').on('submit', function(e){
                 e.preventDefault();
                 
-                // alert('llego a la función crear post');
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-
+                var URL = $('#formCrearPost').attr('data-action');
+                // console.log('{{ csrf_token() }}');
                 $.ajax({
-                    url: "{{ route('posts.store') }}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: $('#formCrearPost').serializeArray(),
-                    success: function(respuesta) {
+                    url: URL,
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        txt_titulo_post: $('#txt_titulo_post').val(),
+                        txt_email_post: $('#txt_email_post').val(),
+                        txt_contenido_post: $('#txt_contenido_post').val(),
+                    },
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(response) {
                         console.log('success');
-                        console.log(respuesta);
+                        console.log(response);
                     },
                     error: function(err) {
                         console.log('error');
