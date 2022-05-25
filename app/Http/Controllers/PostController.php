@@ -8,6 +8,11 @@ use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
+    // Integrando middleware de auth
+    public function __construct() {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
