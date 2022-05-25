@@ -45,7 +45,7 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form action="#" method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
+                    <form method="POST" id="formCrearPost" name="formCrearPost" enctype="multipart/form-data" onSubmit="return false;">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Agregar Post</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -60,10 +60,12 @@
                                 <label for="exampleFormControlInput1" class="form-label">Email:</label>
                                 <input type="text" class="form-control" id="txt_email_post" name="txt_email_post" placeholder="name@example.com" required>
                             </div>
+                            <!--
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Imagen:</label>
                                 <input type="file" class="form-control" id="txt_imagen_post" name="txt_imagen_post">
                             </div>
+                            -->
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Contenido:</label>
                                 <textarea class="form-control" id="txt_contenido_post" name="txt_contenido_post" rows="3" placeholder="Descripción..."></textarea>
@@ -81,27 +83,20 @@
 
     @section('morejs')
         <script type="text/javascript">
-            $.ajaxSetup(
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            );
-
+            
+            $(document).on('click', '#btn_crear_post', function(e) {
+                e.preventDefault();
                 
-            $('#btn_crear_post').on('click', function(e) {
-                // alert('recibio click en el botón: btn_crear_post');
-                // e.preventDefault();
-
-                // 
-                // let route = "{{ route('/posts') }}";
-                
-                // Ejecutamos ajax
-                $.ajax({
-                    url: "/posts",
-                    type: 'POST',
+                // alert('llego a la función crear post');
+                $.ajaxSetup({
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')     
-                    },
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{ route('posts.store') }}",
+                    type: 'POST',
                     dataType: 'json',
                     data: $('#formCrearPost').serializeArray(),
                     success: function(respuesta) {
@@ -112,8 +107,8 @@
                         console.log('error');
                         console.log(err);
                     }
-                });    
+                });  
+                 
             });
-        
         </script>
     @endsection
