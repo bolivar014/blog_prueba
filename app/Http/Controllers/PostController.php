@@ -100,14 +100,15 @@ class PostController extends Controller
         $validarDatos = $request->validate([
             'txt_titulo_post' => 'required|min:3|max:50',
             'txt_email_post' => 'required|email',
-            'txt_contenido_post' => 'required|min:5|max:50'
+            'txt_contenido_post' => 'required|min:5|max:50',
+            'txt_id_r_post' => 'required'
         ]);
 
         // Creamos nueva instancia al modelo POST
         $post = new Post();
 
         // Configuramos datos a almacenar en DB
-        $post->fk_id_user = auth()->id();
+        $post->fk_id_user = $validarDatos['txt_id_r_post'];
         $post->titulo = $validarDatos['txt_titulo_post'];
         $post->email = $validarDatos['txt_email_post'];
         $post->imagen = 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';

@@ -63,10 +63,14 @@
                         </div>
                         <div class="modal-body">
                             {{ csrf_field() }}
+                            
+                            <div class="mb-3 col-md-7" style="display: none;">
+                                <label for="exampleFormControlInput1" class="form-label">ID:</label>
+                                <input type="hidden" class="form-control" id="txt_id_r_post" name="txt_id_r_post" placeholder="Titulo del responsable post" value="{{ auth()->id() }}">
+                            </div>
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Titulo:</label>
                                 <input type="text" class="form-control" id="txt_titulo_post" name="txt_titulo_post" placeholder="Titulo del post" value="{{ old('txt_titulo_post') }}">
-                                
                             </div>
                             <div class="mb-3 col-md-7">
                                 <label for="exampleFormControlInput1" class="form-label">Email:</label>

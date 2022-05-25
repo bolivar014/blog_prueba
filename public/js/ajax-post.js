@@ -31,7 +31,12 @@ $('#formCrearPost').on('submit', function(e){
             $('#txt_alert').remove();
 
             // Reseteamos formulario
-            $('#formCrearPost').trigger("reset");
+            limpiarCampos();
+
+            // 
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
         } else {
             // Sweet alert en caso que no se cree el post exitosamente
             Swal.fire({
@@ -61,3 +66,10 @@ $('#formCrearPost').on('submit', function(e){
 
     });  
 });
+
+// Evento para limpiar campos del formulario
+function limpiarCampos() {
+    $('#txt_titulo_post').val('');
+    $('#txt_email_post').val('');
+    $('#txt_contenido_post').val('');
+}
