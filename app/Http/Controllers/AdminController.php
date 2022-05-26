@@ -51,7 +51,12 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        // Buscamos el registro si existe
+        $post = Post::findOrFail($id);
+
+        return view('admins.show', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -85,8 +90,8 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
-        
+        // dd($id);
+
         // Buscamos el registro si existe
         $post = Post::findOrFail($id);
 
