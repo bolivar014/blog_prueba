@@ -83,7 +83,9 @@ function limpiarCampos() {
 }
 
 // Evento para eliminar registro
-function confirmarEliminarPost() {
+function confirmarEliminarPost(idPost) {
+    // Recuperamos el token de sesión
+    
     Swal.fire({
         title: 'Deseas eliminar el registro?',
         icon: 'warning',
@@ -92,10 +94,39 @@ function confirmarEliminarPost() {
         cancelButtonText: `Cancelar`,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire('Saved!', '', 'success')
+            // Swal.fire('Saved!', '', 'success')
+            // fetch('/admins/' + idPost, {
+            //     method: "DELETE", // POST, PUT, DELETE, GET, etc.
+            //     "X-CSRF-Token": csrfToken,
+                
+            // })
+            // .then(function(response){
+            //     console.log(response);
+            // })
+
+            $.ajax({
+                url: "/admins/" + idPost,
+                type: 'post',
+                dataType: "json",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    '_method': 'delete'
+                },
+                success: function(response) {
+                    console.log('success');
+                    console.log(response);
+                },
+                error: function (err) {
+                    
+                    console.log('success');
+                    console.log(err);
+                }
+            });
         }
-      })
+    })
 }

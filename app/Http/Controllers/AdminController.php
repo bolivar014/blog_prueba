@@ -85,6 +85,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
+        
+        // Buscamos el registro si existe
+        $post = Post::findOrFail($id);
+
+        // Ejecutamos la eliminación del registro
+        $post->delete();
     }
 }
