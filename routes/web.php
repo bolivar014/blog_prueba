@@ -31,4 +31,4 @@ Route::post('/posts/storePost', [App\Http\Controllers\PostController::class, 'st
 
 // ------------------ CONTROLADORES DE VISTAS ADMINS ------------------
 // Controlador de recursos compartidos para vistas admin
-Route::resource('/admins', AdminController::class);
+Route::resource('/admins', AdminController::class)->middleware('admin');
