@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     // Inicializo middleware de auth
@@ -19,9 +20,13 @@ class AdminController extends Controller
     public function index()
     {
         // Ejecutamos query para recuperar los ultimos 10 posts ordenandolos descendente
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        $posts = DB::table('posts')
+        ->join('users', 'posts.fk_id_user', '=', 'users.id')
+        ->orderBy('created_at', 'desc')
+        ->select('posts.id', 'posts.titulo', 'posts.email', 'posts.imagen', 'posts.contenido', 'posts.created_at', 'users.name')
+        ->paginate(10);
 
-        //
+        // Retornamos vista
         return view('admins.index', [
             'posts' => $posts
         ]);

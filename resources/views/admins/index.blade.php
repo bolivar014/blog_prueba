@@ -18,7 +18,7 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <th scope="row">{{ $post->id }}</th>
-                                    <td>Mark</td>
+                                    <td>{{ $post->name }}</td>
                                     <td>{{ $post->titulo }}</td>
                                     <td>{{ substr($post->created_at, 0, 16) }}</td>
                                     <td><a href="/admins/{{ $post->id }}"><i class="fa-solid fa-eye" style="color: green;"></i></a> <a href="#" onclick="confirmarEliminarPost({{ $post->id }});"><i class="fa-solid fa-trash-can" style="color: Red;"></i></a></td>
