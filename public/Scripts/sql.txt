@@ -1,0 +1,27 @@
+//  QUERY DE PRODUCTOS MÁS VENDIDOS
+
+    SELECT 
+        a11.sku AS CODPROD,
+        SUM(a11.cantidad) AS TOTALCANT,
+        (a11.precio_unitario * SUM(a11.cantidad)) AS TOTALVENTA,
+        (a11.costo_unitario * SUM(a11.cantidad)) AS TOTALCOSTO
+    FROM `facturacion_detalle` a11
+    GROUP BY a11.sku
+    ORDER BY TOTALCANT DESC;
+
+// ------------------------------------------------------------
+
+// QUERY VENTAS GENERALES POR CLIENTE
+SELECT
+    A11.id_factura,
+    CONCAT(a11.fecha_realizacion, " ", a11.hora_realizacion) AS FECHAVENTA,
+    a12.documento AS DOCCLI,
+    CONCAT(a12.nombre, " ", a12.apellido) AS NOMBRECLI,
+    (SELECT CONCAT(a13.fact_prefijo, "-", a13.fact_consecutivo) AS CONSECFAC FROM `facturacion` a13 WHERE (a11.id_factura = a13.id_factura)) AS CONSECFAC,
+    (SELECT SUM(a14.precio_unitario * a14.cantidad) FROM `facturacion_detalle` a14 WHERE (a11.id_factura = a14.id_factura)) AS TOTALVENTA,
+    (SELECT SUM(a15.cantidad) AS CANTIDAD FROM `facturacion_detalle` a15 WHERE (a11.id_factura = a15.id_factura)) AS TOTALCANTIDAD,
+    (SELECT SUM(a16.iva) AS CANTIDAD FROM `facturacion_detalle` a16 WHERE (a11.id_factura = a16.id_factura)) AS TOTALIVA
+FROM `facturacion` a11
+INNER JOIN `tercero` a12
+    ON (a11.id_tercero = a12.id_tercero)
+ORDER BY a11.fecha_realizacion, a11.hora_realizacion ASC
