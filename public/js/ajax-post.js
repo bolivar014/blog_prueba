@@ -9,11 +9,11 @@ $('#formCrearPost').on('submit', function(e){
     formData.append('txt_email_post', $('#txt_email_post').val());
     formData.append('txt_imagen_post', $('#txt_imagen_post')[0].files[0]);
     formData.append('txt_contenido_post', $('#txt_contenido_post').val());
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
 
     // Ejecutamos ajax
     $.ajax({
         url: '/posts/storePost',
-        method: 'POST',
         type: 'POST',
         dataType: 'JSON',
         contentType: false,
@@ -67,11 +67,12 @@ $('#formCrearPost').on('submit', function(e){
         // Limpiamos alertas de error existentes
         $('#txt_alert').remove();
 
-        // Iteramos los campos que aún no han sido completados para alerta de error
-        $.each(resp.responseJSON.errors, function (key, value) {
-            $(document).find('[name='+key+']').after('<span id="txt_alert" name="txt_alert" class="text-strong text-danger"><strong>' +value+ '</strong></span>')
-        });
-
+        if(resp.responseJSON != "" && resp.responseJSON != " " && resp.responseJSON != null) {
+            // Iteramos los campos que aún no han sido completados para alerta de error
+            $.each(resp.responseJSON.errors, function (key, value) {
+                $(document).find('[name='+key+']').after('<span id="txt_alert" name="txt_alert" class="text-strong text-danger"><strong>' +value+ '</strong></span>')
+            });
+        }
     });  
 });
 
@@ -97,16 +98,7 @@ function confirmarEliminarPost(idPost) {
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-            // Swal.fire('Saved!', '', 'success')
-            // fetch('/admins/' + idPost, {
-            //     method: "DELETE", // POST, PUT, DELETE, GET, etc.
-            //     "X-CSRF-Token": csrfToken,
-                
-            // })
-            // .then(function(response){
-            //     console.log(response);
-            // })
-
+            // Ejecutamos ajax
             $.ajax({
                 url: "/admins/" + idPost,
                 type: 'post',

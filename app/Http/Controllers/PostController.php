@@ -115,7 +115,7 @@ class PostController extends Controller
         $validarDatos = $request->validate([
             'txt_titulo_post' => 'required|min:3|max:50',
             'txt_email_post' => 'required|email',
-            'txt_contenido_post' => 'required|min:5|max:50',
+            'txt_contenido_post' => 'required|min:5|max:255',
             'txt_id_r_post' => 'required'
         ]);
         
