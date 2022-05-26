@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 class AdminController extends Controller
 {
+    // Inicializo middleware de auth
+    public function __construct() {
+        return $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
